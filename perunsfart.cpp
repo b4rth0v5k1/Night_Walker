@@ -1,6 +1,7 @@
 
 
 #include <windows.h>
+//#include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <tlhelp32.h>
@@ -28,7 +29,8 @@ int main()
 		printf("Failed to create process. Error code: %u", GetLastError());
 
 	printf("[+] Process created in suspended state with pid: %d\n", pi.dwProcessId);
-
+	perunfart(pi.hProcess);
+/*
 	// get the base address of ntdll
 	WCHAR masterDLL[] = { 'n','t','d','l','l','.','d','l','l',0 };
 	dllModule = hlpGetModuleHandle(masterDLL);
@@ -54,4 +56,5 @@ int main()
 	// we replace the hooked .text section with the clean one
 	if (unhook(dllModule, pRemoteCode, oldPro))
 		printf("[+] Unhook sucessfull :)\n");
+	*/
 }

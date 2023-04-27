@@ -29,5 +29,8 @@
     <ClInclude Include="PEstructs.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="utils.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
