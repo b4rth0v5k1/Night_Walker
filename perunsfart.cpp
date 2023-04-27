@@ -30,31 +30,5 @@ int main()
 
 	printf("[+] Process created in suspended state with pid: %d\n", pi.dwProcessId);
 	perunfart(pi.hProcess);
-/*
-	// get the base address of ntdll
-	WCHAR masterDLL[] = { 'n','t','d','l','l','.','d','l','l',0 };
-	dllModule = hlpGetModuleHandle(masterDLL);
-	DWORD dllSize1 = getSizeOfImage(dllModule);
 
-	// we allocate buffer for our dll at pRemoteCode
-	char alloc[] = { 'N','t','A','l','l','o','c','a','t','e','V','i','r','t','u','a','l','M','e','m','o','r','y',0 };
-	SIZE_T dllSize = getSizeOfImage(dllModule);
-	myNtAllocateVirtualMemory pAllocMem = (myNtAllocateVirtualMemory)hlpGetProcAddress(hlpGetModuleHandle(masterDLL), alloc);
-	success = pAllocMem(hCurProc, &pRemoteCode, 0, &dllSize, MEM_COMMIT, PAGE_READWRITE); 
-	if (success == 0x0)
-		printf("[+] RW buffer created for dll: %p\n", pRemoteCode);
-	
-	// read ntdll from the suspended process and copy to local process
-	PULONG bytesRead = NULL;
-	hSusProc = pi.hProcess;
-	char ntRead[] = { 'N','t','R','e','a','d','V','i','r','t','u','a','l','M','e','m','o','r','y',0 };
-	myNtReadVirtualMemory pReadMem = (myNtReadVirtualMemory)hlpGetProcAddress(hlpGetModuleHandle(masterDLL), ntRead);
-	success = pReadMem(hSusProc, (PVOID)dllModule, pRemoteCode, dllSize1, bytesRead);
-	if (success == 0x0)
-		 printf("[+] Ntdll copied from suspended to local process\n");
-	TerminateProcess(hSusProc, 0);
-	// we replace the hooked .text section with the clean one
-	if (unhook(dllModule, pRemoteCode, oldPro))
-		printf("[+] Unhook sucessfull :)\n");
-	*/
 }

