@@ -283,7 +283,7 @@ void etwPatch() {
 		printf("[+] Protection of NtTraceEvent changed to wcx\n");
 	}
 
-	success = pWriteMem(hCurProc, value+3, (PVOID)patch, 1, (SIZE_T*)NULL);
+	success = pWriteMem(hCurProc, value, (PVOID)patch, 1, (SIZE_T*)NULL);
 	if (NT_SUCCESS(success)) {
 		printf("[+] RET instruction copied successfully\n");
 		printf("NtTraceEvent 3rd byte after patching: %x\n", *(value + 3));
