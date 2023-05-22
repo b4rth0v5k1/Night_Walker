@@ -12,7 +12,6 @@ int FindTarget();
 void perunfart(HANDLE hSusProc);
 void etwPatch();
 void amsiPatch();
-int ntTestInject();
 void RemoteInject();
 void NTinject();
 void threadPool();
