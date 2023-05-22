@@ -15,6 +15,8 @@ void amsiPatch();
 void RemoteInject();
 void NTinject();
 void threadPool();
+void AtomBombing();
+void SetWinHookEx(PROCESS_INFORMATION pi);
 void earlybird(PROCESS_INFORMATION pi);
 PROCESS_INFORMATION ppid(SIZE_T attributeSize, STARTUPINFOEX six);
 //HANDLE FindThread(int pid);

