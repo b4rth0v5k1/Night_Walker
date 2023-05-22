@@ -252,6 +252,11 @@ typedef enum _SECTION_INHERIT {
 	ViewUnmap = 2
 } SECTION_INHERIT, * PSECTION_INHERIT;
 
+struct ThreadInfo {
+	DWORD* threadIds;
+	DWORD numThreads;
+};
+
 typedef VOID(WINAPI* RtlMoveMemory_t)(
 	VOID UNALIGNED* Destination,
 	const VOID UNALIGNED* Source,

