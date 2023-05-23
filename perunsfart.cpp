@@ -1,7 +1,4 @@
-
-
 #include <windows.h>
-//#include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <tlhelp32.h>
@@ -58,15 +55,13 @@ int main(int argc, char* argv[])
 
 
 
-	// Uncomment for Process injection
+	// Uncomment for Process injection / Execution
 	// - Earlybird for APC routine in a suspended process
 	// - NTInject for simple exectuion with direct NT functions
 	printf("\n****** PROCESS INJECTION *****\n");
-	//AtomBombing(); -- NOT WORKING 
-	//SetWinHookEx(pi); -- NOT WORKING
-	earlybird(pi);
-	//NTinject();
-
+	// earlybird(pi);
+	// NTinject(); // Use with IAT Hooking
+	 myRtlCreateProcessReflection(pi.dwProcessId);
 
 	// Uncomment for some sleeping
 	//Sleep(60000);
