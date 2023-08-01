@@ -3,7 +3,7 @@
 This is a shellcode runner I developpped to learn more about PerunsFart technique, but ended up adding more functionality.  
 It enhanced my knowledge about windows API, malware development, debugging.   
 
-You can find my detailed blog about this project and the results of my testing against AV/EDR here.
+You can find my detailed blog about this project and the results of my testing against AV/EDR **[here](https://ph3n1x.com/posts/offensive-tradecraft-night-walker/)**.
 There will be probably a version 2 released with Indirect Syscall and dynamic syscall ID, but only in 2024 as I need to focus on other skills too.
 
 Also for real engagements, it's better to apply the techniques described here with a DLL  Hijacking by proxying instead of a standaolne executable.
